@@ -1,0 +1,22 @@
+{
+  "name": "sm-git",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Proxtx/sm-git.git"
+  },
+  "author": "Proxtx",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Proxtx/sm-git/issues"
+  },
+  "homepage": "https://github.com/Proxtx/sm-git#readme",
+  "dependencies": {
+    "simple-git": "^3.19.1"
+  }
+}
