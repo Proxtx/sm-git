@@ -1,5 +1,5 @@
-import config from "@proxtx/config";
 import git from "simple-git";
+import { exec } from "child_process";
 
 export class Component {
   constructor(service, config) {
@@ -10,23 +10,24 @@ export class Component {
 
   functions = {
     pull: async () => {
-      await this.git.pull();
+      let res = Boolean((await this.git.pull()).summary.changes);
+      if (res && this.config.additionalCommand) {
+        exec(this.config.additionalCommand, { cwd: this.service.config.path });
+      }
+
+      return res;
     },
   };
 
   getData = () => {
-    return {
-      host: config.smConfig.host,
-      file: this.config.file,
-      path: this.service.config.path,
-    };
+    return {};
   };
 
   mainWidgets = ["main-widget"];
 
   configConfig = [
     {
-      name: "additional commands",
+      name: "additionalCommand",
       type: "text",
       value: "npm i",
     },
