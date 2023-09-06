@@ -23,20 +23,24 @@ export class Component {
 
   functions = {
     pull: async () => {
-      let res = Boolean((await this.git.pull()).summary.changes);
-      if (res) {
-        if (this.config.additionalCommand)
-          exec(this.config.additionalCommand, {
-            cwd: this.service.config.path,
-          });
-        for (let component of this.service.components)
-          if (component.name == "sm-process") {
-            await component.import.functions.stop();
-            await component.import.functions.start();
-          }
-      }
+      try {
+        let res = Boolean((await this.git.pull()).summary.changes);
+        if (res) {
+          if (this.config.additionalCommand)
+            exec(this.config.additionalCommand, {
+              cwd: this.service.config.path,
+            });
+          for (let component of this.service.components)
+            if (component.name == "sm-process") {
+              await component.import.functions.stop();
+              await component.import.functions.start();
+            }
+        }
 
-      return res;
+        return res;
+      } catch (e) {
+        console.log("Git pull resulted in an error: ", e);
+      }
     },
   };
 
